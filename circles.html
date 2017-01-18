@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circles</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/patatap.css">
+	<script type="text/javascript" src="assets/js/lib/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+
+	<!-- PaperScript Animations -->
+	<script type="text/paperscript" canvas="myCanvas">
+		// Create nested loop for x and y variables
+		for(var x = 0; x < 1000; x += 100) {
+			for(var y = 0; y < 1000; y += 100) {
+				var circle2 = new Path.Circle(new Point(x, y), 10);
+				circle2.fillColor = 'yellow';
+			}
+		}
+
+	</script>
+</head>
+
+<body>	
+	<canvas id="myCanvas" resize></canvas>
+	<script type="text/javascript" src="assets/js/patatap.js"></script>
+</body>
+</html>
