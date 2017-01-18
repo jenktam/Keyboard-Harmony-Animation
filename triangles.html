@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Keyboard Harmony Animation</title>
+	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+	<script type="text/javascript" src="assets/js/lib/howler.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/patatap.css">
+
+	<!-- PaperScript Animations -->
+	<script type="text/paperscript" canvas="myCanvas">
+
+var shape = 1; //if  = to 1 triangle if 2 circle
+var keyData = {
+	q: {
+		sound: new Howl({
+  		src: ['sounds/A/bubbles.mp3']
+		}),
+		color: '#1abc9c'
+	},
+	w: {
+		sound: new Howl({
+  		src: ['sounds/A/clay.mp3']
+		}),
+		color: '#2ecc71'
+	},
+	e: {
+		sound: new Howl({
+  		src: ['sounds/A/confetti.mp3']
+		}),
+		color: '#3498db'
+	},
+	r: {
+		sound: new Howl({
+  		src: ['sounds/A/corona.mp3']
+		}),
+		color: '#9b59b6'
+	},
+		t: {
+		sound: new Howl({
+  		src: ['sounds/A/dotted-spiral.mp3']
+		}),
+		color: '#34495e'
+	},
+	y: {
+		sound: new Howl({
+  		src: ['sounds/A/flash-1.mp3']
+		}),
+		color: '#16a085'
+	},
+	u: {
+		sound: new Howl({
+  		src: ['sounds/A/flash-2.mp3']
+		}),
+		color: '#27ae60'
+	},
+	i: {
+		sound: new Howl({
+  		src: ['sounds/A/flash-3.mp3']
+		}),
+		color: '#2980b9'
+	},
+	o: {
+		sound: new Howl({
+			src: ['sounds/A/glimmer.mp3']
+		}),
+		color: '#8e44ad'
+	},
+	p: {
+		sound: new Howl({
+  		src: ['sounds/A/moon.mp3']
+		}),
+		color: '#2c3e50'
+	},
+	a: {
+		sound: new Howl({
+  		src: ['sounds/A/pinwheel.mp3']
+		}),
+		color: '#f1c40f'
+	},
+	s: {
+		sound: new Howl({
+  		src: ['sounds/A/piston-1.mp3']
+		}),
+		color: '#e67e22'
+	},
+		d: {
+		sound: new Howl({
+  		src: ['sounds/A/piston-2.mp3']
+		}),
+		color: '#e74c3c'
+	},
+	f: {
+		sound: new Howl({
+  		src: ['sounds/A/prism-1.mp3']
+		}),
+		color: '#95a5a6'
+	},
+	g: {
+		sound: new Howl({
+  		src: ['sounds/A/prism-2.mp3']
+		}),
+		color: '#f39c12'
+	},
+	h: {
+		sound: new Howl({
+  		src: ['sounds/A/prism-3.mp3']
+		}),
+		color: '#d35400'
+	},
+	j: {
+		sound: new Howl({
+  		src: ['sounds/A/splits.mp3']
+		}),
+		color: '#1abc9c'
+	},
+	k: {
+		sound: new Howl({
+  		src: ['sounds/A/squiggle.mp3']
+		}),
+		color: '#2ecc71'
+	},
+	l: {
+		sound: new Howl({
+  		src: ['sounds/A/strike.mp3']
+		}),
+		color: '#3498db'
+	},
+	z: {
+		sound: new Howl({
+  		src: ['sounds/A/suspension.mp3']
+		}),
+		color: '#9b59b6'
+	},
+	x: {
+		sound: new Howl({
+  		src: ['sounds/A/timer.mp3']
+		}),
+		color: '#34495e'
+	},
+	c: {
+		sound: new Howl({
+  		src: ['sounds/A/ufo.mp3']
+		}),
+		color: '#16a085'
+	},
+	v: {
+		sound: new Howl({
+  		src: ['sounds/A/veil.mp3']
+		}),
+		color: '#27ae60'
+	},
+	b: {
+		sound: new Howl({
+  		src: ['sounds/A/wipe.mp3']
+		}),
+		color: '#2980b9'
+	},
+	n: {
+		sound: new Howl({
+			src: ['sounds/A/zig-zag.mp3']
+		}),
+		color: '#8e44ad'
+	},
+	m: {
+		sound: new Howl({
+  		src: ['sounds/A/moon.mp3']
+		}),
+		color: '#2c3e50'
+	}
+}
+
+
+var circles = [];
+function onKeyDown(event) {
+	if(keyData[event.key]){
+		var maxPoint = new Point(view.size.width, view.size.height);
+		var randomPoint = Point.random();
+		var point = maxPoint * randomPoint;
+		var randomR = Math.random()* 200 + 300;
+		//find if use triangle or circle
+		if (shape === 1) {
+			var newCircle = new Path.RegularPolygon(point, 3, randomR);
+			shape = 2;	
+		} 
+		else if (shape === 3) {
+			var newCircle = new Path.RegularPolygon(point, 5, randomR);
+			shape = 1;	
+		}
+		else {
+			var newCircle = new Path.Circle(point, randomR);
+			shape = 3;
+		}
+		newCircle.fillColor = keyData[event.key].color;
+		keyData[event.key].sound.play();
+		circles.push(newCircle);
+		}
+}
+
+
+
+function onFrame(event) {
+
+	for( var i = 0; i<circles.length; i++){
+		circles[i].fillColor.hue += 1;
+		circles[i].scale(.95);
+		if(circles[i].area<1) {
+			circles[i].remove();
+			circles.splice(i,1);
+		}
+		if (i % 3 === 0) {
+			circles[i].rotate(3);
+		}
+		var item = project.activeLayer.children[i];
+		if(i % 2 === 0) {
+			item.position.x += item.bounds.width / 20;
+		} else {
+			item.position.x -= item.bounds.width / 20;
+		}
+		
+		// If the item has left the view on the right, move it back
+		// to the left:
+		if (item.bounds.left > view.size.width) {
+			item.position.x = -item.bounds.width;
+		}
+	}
+	//animatedCircle.scale(.99);
+}
+
+
+	</script>
+</head>
+<body>
+	<div id="hint">
+		<p class="message">Press any key and turn up your speakers :)</p>
+	</div>
+	<canvas id="myCanvas" resize></canvas>
+
+	<script type="text/javascript" src="assets/js/patatap.js"></script>
+</body>
+
+</html>
