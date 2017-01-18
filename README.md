@@ -1,4 +1,4 @@
-# Keyboard-Harmony-Animation
+# Keyboard Harmony Animation
 
 This app is designed to play a new sound any time a new key is pressed. I built this using Paper.js for the graphics and howler.js for the audio sounds. I learned the power of Javascript frameworks and libraries while having a blast building this visual animation.
 
